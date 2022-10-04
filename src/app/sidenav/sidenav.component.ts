@@ -1,6 +1,7 @@
 import { Component, OnInit, Output, EventEmitter, HostListener } from '@angular/core';
 import { navData } from './nav-data';
 import { keyframes, animate, style, transition, trigger } from "@angular/animations";
+import { fadeInOut, InavbarData } from './helper';
 interface sideNaveToggle {
   screenWidth: number;
   collapsed: boolean;
@@ -10,26 +11,13 @@ interface sideNaveToggle {
   templateUrl: './sidenav.component.html',
   styleUrls: ['./sidenav.component.scss'],
   animations: [
-    trigger('fadeInOut', [
-      transition(':enter', [
-        style({ opacity: 0 }),
-        animate('350ms',
-          style({ opacity: 1 })
-        )
-      ]),
-      transition(':leave', [
-        style({ opacity: 1 }),
-        animate('350ms',
-          style({ opacity: 0 })
-        )
-      ])
-    ]),
+    fadeInOut,
     trigger('rotate', [
       transition(':enter', [
         animate('1000ms',
           keyframes([
-            style({transform:'rotate(0deg)',offset:'0'}),
-            style({transform:'rotate(2turn)',offset:'1'})
+            style({ transform: 'rotate(0deg)', offset: '0' }),
+            style({ transform: 'rotate(2turn)', offset: '1' })
           ])
         )
       ])
@@ -54,6 +42,7 @@ export class SidenavComponent implements OnInit {
   collapsed = false;
   screenWidth = 0;
   navData = navData;
+  multiple: boolean = false;
   toggleColapse(): void {
     this.collapsed = !this.collapsed;
     this.onToggleSidenav.emit({ collapsed: this.collapsed, screenWidth: this.screenWidth })
@@ -61,5 +50,15 @@ export class SidenavComponent implements OnInit {
   colseSidenav(): void {
     this.collapsed = false;
     this.onToggleSidenav.emit({ collapsed: this.collapsed, screenWidth: this.screenWidth })
+  }
+  handleClick(item: InavbarData): void {
+    if (!this.multiple) {
+      for (let modelItem of this.navData) {
+        if (item !== modelItem && modelItem.expanded) {
+          modelItem.expanded = false;
+        }
+      }
+    }
+    item.expanded = !item.expanded;
   }
 }

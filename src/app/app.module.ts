@@ -7,7 +7,11 @@ import { AppComponent } from './app.component';
 import { BodyComponent } from './body/body.component';
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { MasterDataComponent } from './master-data/master-data.component';
+import { SublevelMenuComponent } from './sidenav/sublevel-menu.component';
+import { PivotGridModule } from '@progress/kendo-angular-pivotgrid';
+import { GridModule } from '@progress/kendo-angular-grid';
+
+
 
 @NgModule({
   declarations: [
@@ -15,13 +19,15 @@ import { MasterDataComponent } from './master-data/master-data.component';
     BodyComponent,
     SidenavComponent,
     DashboardComponent,
-    MasterDataComponent,
+    SublevelMenuComponent,
 
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    PivotGridModule,
+    GridModule
   ],
   providers: [],
   bootstrap: [AppComponent]
